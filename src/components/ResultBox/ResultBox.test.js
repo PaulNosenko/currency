@@ -46,4 +46,16 @@ describe('Component ResultBox', () => {
         });
         cleanup();
     });
+
+    [
+        { from: 'PLN', to: 'USD', amount: -1, expectedOutput: 'Wrong value...' },
+        { from: 'USD', to: 'PLN', amount: -999, expectedOutput: 'Wrong value...' },
+    ].forEach(testSuite => {
+        it('should render proper info about conversion from a currency to itself', () => {
+            render(<ResultBox from={testSuite.from} to={testSuite.to} amount={testSuite.amount} />);
+            const output = screen.getByTestId('conversion-result');
+            expect(output).toHaveTextContent(testSuite.expectedOutput);
+        });
+        cleanup();
+    });
 });
